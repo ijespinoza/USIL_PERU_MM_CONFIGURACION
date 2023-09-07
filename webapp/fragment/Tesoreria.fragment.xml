@@ -1,0 +1,121 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:Form id="FormDatosMaestros"
+			editable="false">
+			<f:title>
+				<core:Title text="Visualización de Información del Proveedor" />
+			</f:title>
+			<f:layout>
+				<f:ResponsiveGridLayout
+					labelSpanXL="4"
+					labelSpanL="4"
+					labelSpanM="4"
+					labelSpanS="12"
+					adjustLabelSpan="false"
+					emptySpanXL="1"
+					emptySpanL="1"
+					emptySpanM="1"
+					emptySpanS="0"
+					columnsXL="1"
+					columnsL="1"
+					columnsM="1"
+					singleContainerFullSize="false" />
+			</f:layout>
+			<f:formContainers>
+				<f:FormContainer>
+					<f:formElements>
+						<f:FormElement >
+								<f:fields>
+									<ComboBox xmlns="sap.m" id="combProveedor" items="{Tesoreria>/empresas}" selectedKey="{datosTesoreria>/empresa}">
+										<items>
+											<core:Item  
+										            key="{Tesoreria>ruc}" text="{Tesoreria>razonSocial}"/>
+											</items>
+									</ComboBox>
+								
+								</f:fields>
+							</f:FormElement>
+						<f:FormElement >
+							<f:fields>
+								<CheckBox text="Mostrar Fecha Pago Factuara" valueState="Information" selected="{datosTesoreria>/fechaPagoFactura}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement >
+							<f:fields>
+								<CheckBox text="Mostrar Fecha Pago Detracción" valueState="Information" selected="{datosTesoreria>/fechaPagoDetraccion}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement>
+							<f:fields>
+								<CheckBox text="Mostrar Pago Factura" valueState="Information" selected="{datosTesoreria>/pagoFactura}"/>
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement >
+							<f:fields>
+								<CheckBox text="Mostrar Pago Detracción" valueState="Information" selected="{datosTesoreria>/pagoDetraccion}" />
+							</f:fields>
+						</f:FormElement>
+						<f:FormElement label="" id="idBtnUpdate" >
+							<f:fields>
+								<Button press="onActualizarDatosNotificacion" text="Actualizar" visible="{datosTesoreria>/boton}"/>
+								<Button press="onCancelarNotificacion" text="Cancelar" visible="{datosTesoreria>/boton}"/>
+							</f:fields>
+						</f:FormElement>
+					</f:formElements>
+				</f:FormContainer>
+			</f:formContainers>
+		</f:Form>
+	
+			<Table id="idTableTesoreria" 
+			items="{path: '/informacionProveedor'}"
+			mode="MultiSelect"
+			inset="false">
+			<headerToolbar>
+				<OverflowToolbar id="otbSubheader02">
+					<Title 	 text="Lista de Empresas" level="H2"  />
+					<ToolbarSpacer />
+					<OverflowToolbarButton text="Nueva" icon="sap-icon://add" press="onAñadirFilaTesoreria" />					
+					<OverflowToolbarButton text="Eliminar" icon="sap-icon://delete" press="onEliminarFilaTesoreria"/>
+				</OverflowToolbar>
+			</headerToolbar>
+			<columns>
+				<Column >
+					<Text text="Empresa" />
+				</Column>
+				<Column >
+					<Text text="Fecha Pago Factura" />
+				</Column>
+				<Column >
+					<Text text="Fecha Pago Detracción" />
+				</Column>
+				<Column >
+					<Text text="Pago Factura" />
+				</Column>
+				<Column >
+					<Text text="Pago Detracción" />
+				</Column>
+				<Column width="4rem">
+					<Text text="" />
+				</Column>
+			</columns>
+			<items id="items">
+				<ColumnListItem vAlign="Middle" >
+					<cells>
+						<ObjectIdentifier  title="{razonSocial}" />
+						<ObjectIdentifier  title="{fechaPagoFactura}" />
+						<ObjectIdentifier  title="{fechaPagoDetraccion}" />
+						<ObjectIdentifier  title="{pagoFactura}" />
+						<ObjectIdentifier  title="{pagoDetraccion}" />
+						<Button press="onEditarFilaTesoreria" icon="sap-icon://edit" />
+					</cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+		
+	</VBox>	
+		
+</core:FragmentDefinition>

@@ -1,0 +1,160 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+<IconTabBar
+		id="idIconTabBarDatosMaestros"
+		expanded="true"
+		selectedKey = "header"
+		class="sapUiResponsiveContentPadding">
+		<items >
+			<IconTabFilter 
+				id="headerMod"
+				key="header"
+				icon="sap-icon://building"
+				iconColor="Positive"
+				text="Sociedad">
+				<Table id="idTbSociedades" 
+						items="{path: '/sociedades'}"
+						mode="None"
+						inset="false">
+						<headerToolbar>
+							<OverflowToolbar id="otbSubheader02">
+								<Title 	 text="Lista de Asignación a Sociedad" level="H2"  />
+								<ToolbarSpacer />
+								<Button type="Accept"
+									text="Mostrar sociedades"
+									press="onAbrirSociedades"
+									ariaDescribedBy="acceptButtonDescription genericButtonDescription">
+								<layoutData>
+									<FlexItemData growFactor="1" />
+								</layoutData>
+							</Button>
+								<!-- <OverflowToolbarButton text="Nueva" icon="sap-icon://add" press="onNuevaPos" />
+								<OverflowToolbarButton text="Editar" icon="sap-icon://edit" press="onEdit"/>
+								<OverflowToolbarButton text="Eliminar" icon="sap-icon://delete" press="onDelete"/> -->
+							</OverflowToolbar>
+						</headerToolbar>
+						<columns>
+							<Column >
+								<Text text="Codigo" />
+							</Column>
+							<Column >
+								<Text text="Sociedad" />
+							</Column>
+							<Column >
+								<Text text="Moneda" />
+							</Column>
+						
+						</columns>
+						<items id="items">
+							<ColumnListItem vAlign="Middle" >
+								<cells>
+									<ObjectIdentifier  title="{codigo}" />
+									<ObjectIdentifier  title="{descripcion}" />	
+									<ObjectIdentifier  title="{moneda}" />											
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+			</IconTabFilter>
+			<IconTabSeparator icon=""/>
+			<IconTabFilter
+				icon="sap-icon://capital-projects"
+				iconColor="Positive"
+				text="Org. Compras">
+				<Table id="idTbOrganizacionCompras" 
+				items="{path: '/orgCompras'}"
+						growing="true" growingThreshold="10"
+						mode="None"
+						inset="false">
+						<headerToolbar>
+							<OverflowToolbar>
+								<Title 	 text="Lista de Asignación a Org. de Compra" level="H2"  />
+								<ToolbarSpacer />
+								<Button type="Accept"
+									text="Mostrar Organizaciones de compra"
+									press="onAbrirOrgCompras"
+									ariaDescribedBy="acceptButtonDescription genericButtonDescription">
+								<layoutData>
+									<FlexItemData growFactor="1" />
+								</layoutData>
+							</Button>
+								<!-- <OverflowToolbarButton text="Nueva" icon="sap-icon://add" press="onNuevaPos" />
+								<OverflowToolbarButton text="Editar" icon="sap-icon://edit" press="onEdit"/>
+								<OverflowToolbarButton text="Eliminar" icon="sap-icon://delete" press="onDelete"/> -->
+							</OverflowToolbar>
+						</headerToolbar>
+						<columns>
+							<Column >
+								<Text text="Código" />
+							</Column>
+							<Column >
+								<Text text="Org. de Compra" />
+							</Column>
+						
+						
+						</columns>
+						<items id="items">
+							<ColumnListItem vAlign="Middle" >
+								<cells>
+									<ObjectIdentifier  title="{codigo}" />
+									<ObjectIdentifier  title="{descripcion}" />	
+								</cells>
+							</ColumnListItem>							
+						</items>
+					</Table>
+			</IconTabFilter>
+			<IconTabSeparator icon=""/>
+			<IconTabFilter
+				icon="sap-icon://group"
+				iconColor="Positive"
+				text="Gpo.Compras">
+				<Table id="idTbGrupoCompras" 
+				items="{path: '/grupoCompras'}"
+						growing="true" growingThreshold="10"
+						mode="None"
+						inset="false">
+						<headerToolbar>
+							<OverflowToolbar id="xx">
+								<Title 	 text="Lista de Asignación a Grp. de Compras" level="H2"  />
+								<ToolbarSpacer />
+								<Button type="Accept"
+									text="Mostrar Grupo de compra"
+									press="onAbrirGrpCompras"
+									ariaDescribedBy="acceptButtonDescription genericButtonDescription">
+								<layoutData>
+									<FlexItemData growFactor="1" />
+								</layoutData>
+							</Button>
+								 
+								<!--<OverflowToolbarButton text="Nueva" icon="sap-icon://add" press="onNuevaPos" />
+								<OverflowToolbarButton text="Editar" icon="sap-icon://edit" press="onEdit"/>
+								<OverflowToolbarButton text="Eliminar" icon="sap-icon://delete" press="onDelete"/> -->
+							</OverflowToolbar>
+						</headerToolbar>
+						<columns>
+								<Column >
+								<Text text="Código" />
+							</Column>
+							<Column >
+								<Text text="Org. de Compra" />
+							</Column>
+						
+						
+						</columns>
+						<items id="items">
+							<ColumnListItem vAlign="Middle" >
+								<cells>
+									<ObjectIdentifier  title="{codigo}" />
+									<ObjectIdentifier  title="{descripcion}" />	
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+			</IconTabFilter>
+			</items>
+		</IconTabBar>
+
+</core:FragmentDefinition>

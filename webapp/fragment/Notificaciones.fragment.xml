@@ -1,0 +1,142 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+ 
+    <IconTabBar
+		id="idIconTabBarSeparatorNoIconMod"
+		expanded="true"
+		selectedKey = "header"
+		class="sapUiResponsiveContentPadding">
+		<items >
+			<IconTabSeparator icon=""/>
+			<IconTabFilter
+				icon="sap-icon://list"
+				iconColor="Positive"
+				text="Facturas">
+				<VBox class="sapUiSmallMargin">
+					
+					<f:Form id="FromFacturas"
+					editable="true">
+					
+					<f:title>
+						<core:Title text="Registro de Notificaciones" />
+					</f:title>
+					
+					<f:layout>
+						<f:ResponsiveGridLayout
+							labelSpanXL="3"
+							labelSpanL="3"
+							labelSpanM="3"
+							labelSpanS="12"
+							adjustLabelSpan="false"
+							emptySpanXL="4"
+							emptySpanL="4"
+							emptySpanM="4"
+							emptySpanS="0"
+							columnsXL="1"
+							columnsL="1"
+							columnsM="1"
+							singleContainerFullSize="false" />
+					</f:layout>
+					
+					<f:formContainers>
+						<f:FormContainer>
+							<f:formElements>
+								<f:FormElement label="Evento">
+									<f:fields>
+										<ComboBox  id="idCbxNotificaciones" items="{Notificaciones>/evento}" selectedKey="{datosNotificaciones>/evento}">
+											<items>
+												<core:Item  
+										            key="{Notificaciones>ID}" text="{Notificaciones>descripcion}"/>
+											</items>
+										</ComboBox>
+									
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="Dirigido a:">
+									<f:fields>
+										<ComboBox id="cds" items="{Notificaciones>/dirigido}" selectedKey="{datosNotificaciones>/dirigido}">
+											<items>
+												<core:Item  
+										            key="{Notificaciones>ID}" text="{Notificaciones>descripcion}"/>
+										
+											</items>
+										</ComboBox>
+									
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="Asunto">
+									<f:fields>
+										<Input value="{datosNotificaciones>/asunto}" id="asd"/>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="Texto Cuerpo Mensaje" id="asfgg" >
+									<f:fields>
+										<TextArea id="sds" 
+											value="{datosNotificaciones>/cuerpo}"
+											rows="10"
+											liveChange="handleLiveChange"/>
+									</f:fields>
+								</f:FormElement>
+								<f:FormElement label="" id="idBtnUpdate" >
+									<f:fields>
+										<Button press="onActualizarDatosNotificacion" text="Actualizar" visible="{datosNotificaciones>/boton}"/>
+										<Button press="onCancelarNotificacion" text="Cancelar" visible="{datosNotificaciones>/boton}"/>
+									</f:fields>
+								</f:FormElement>
+							</f:formElements>
+						</f:FormContainer>
+					</f:formContainers>
+				</f:Form>
+				</VBox>
+				<Table id="clientes" 
+				items="{path: '/filas'}"
+						mode="MultiSelect"
+						inset="false">
+						<headerToolbar>
+							<OverflowToolbar id="tbSubheader02">
+								<Title 	 text="Posiciones" level="H2"  />
+								<ToolbarSpacer />
+								<OverflowToolbarButton text="Nueva" icon="sap-icon://add" press="onAñadirFilaNotificaciones" />
+								<!-- <OverflowToolbarButton text="Editar" icon="sap-icon://edit" press="onEditarFilaNotificaciones"/> -->
+								<OverflowToolbarButton text="Eliminar" icon="sap-icon://delete" press="onEliminarFilaNotificaciones"/>
+							</OverflowToolbar>
+						</headerToolbar>
+						<columns>
+							<Column >
+								<Text text="Evento" />
+							</Column>
+							<Column >
+								<Text text="Dirigido a" />
+							</Column>
+							<Column >
+								<Text text="Asunto" />
+							</Column>
+							<Column >
+								<Text text="Cuerpo" />
+							</Column>
+							<Column width="4rem">
+								<Text text="" />
+							</Column>
+						</columns>
+						<items id="items">
+							<ColumnListItem vAlign="Middle" >
+								<cells>
+									<ObjectIdentifier  title="{evento/descripcion}" />
+									<ObjectIdentifier  title="{destino/descripcion}" />
+									<ObjectIdentifier  title="{asunto}" />
+									<ObjectIdentifier  title="{cuerpo}" />
+									<Button press="onEditarFilaNotificaciones" icon="sap-icon://edit" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+			</IconTabFilter>
+			</items>
+		</IconTabBar>
+	
+            
+      
+</core:FragmentDefinition>

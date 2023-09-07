@@ -1,0 +1,64 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<Table
+		noDataText="No hay constantes disponibles"
+		items="{
+			path: 'ODATA_PROVEEDORES>/Constantes'
+		}"
+		updateFinished="onUpdateFinishedConstantes">
+		<headerToolbar>
+			<OverflowToolbar>
+				<Title text="{/titleTableConstantes}" level="H2" />
+				<ToolbarSpacer />
+				<Button
+					icon="sap-icon://add"
+					press="onMostrarDialogoAgregarConstante"
+					text="Crear constante"
+					type="Emphasized" />
+			</OverflowToolbar>
+		</headerToolbar>
+		<columns>
+			<Column >
+				<Label text="Nombre" />
+			</Column>
+			<Column>
+				<Label text="Valor" />
+			</Column>
+			<Column>
+				<Label text="Descripción" />
+			</Column>
+			<Column>
+				<Label text="Editar" />
+			</Column>
+			<Column>
+				<Label text="Eliminar" />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem
+				vAlign="Inherit"
+			>
+				<cells>
+					<Text text="" />
+					<ObjectIdentifier title="" />
+					<Text text=""/>
+					<Button
+						icon="sap-icon://edit"
+						press="onEditarConstante"
+						type="Attention" />
+					<Button
+						icon="sap-icon://delete"
+						press="onEliminarConstante"
+						text="Crear constante"
+						type="Negative" />
+				</cells>
+			</ColumnListItem>
+		</items>
+
+		<StandardListItem
+			title="{ODATA_PROVEEDORES>descripcion}"
+			description="{ODATA_PROVEEDORES>valor}"
+			info="{ODATA_PROVEEDORES>comentario}" />
+	</Table>
+</core:FragmentDefinition>
