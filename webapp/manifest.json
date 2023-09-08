@@ -15,6 +15,16 @@
             "version": "1.10.6",
             "toolsId": "e93a4b21-f84f-44f3-844e-15dd95a204f6"
         },
+        "dataSources": {
+            "ODATA_CONFIGURACIONES": {
+                "uri": "/odata/v2/configuracion",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            }
+        },
         "crossNavigation": {
             "inbounds": {
                 "ConfigReservas": {
@@ -67,6 +77,10 @@
             "cozy": true
         },
         "models": {
+            "ODATA_CONFIGURACIONES": {
+                "dataSource": "ODATA_CONFIGURACIONES",
+                "preload": true
+            },
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {

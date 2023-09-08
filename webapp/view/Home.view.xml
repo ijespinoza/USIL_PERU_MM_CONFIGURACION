@@ -8,14 +8,14 @@
 		initialDetail="detail"
 		initialMaster="master">
 		<detailPages>
-			<Page
+			<!--<Page
 				id="idPagNotificaciones"
 				title="Configuración de Datos"
 				backgroundDesign= "Solid"
 				showNavButton="{= !${device>/system/desktop} }"
 				navButtonPress=".onPressDetailBack">
 				<core:Fragment id="frg-Notificaciones" fragmentName="usilconfiguracionportalreserva.fragment.Notificaciones" type="XML" />
-			</Page>
+			</Page>-->
 			<Page
 				id="idPagDatosMaestros"
 				title="Configuración de Datos"
@@ -24,6 +24,7 @@
 				navButtonPress=".onPressDetailBack">
 				<core:Fragment id="frg-DatosMaestros" fragmentName="usilconfiguracionportalreserva.fragment.DatosMaestros" type="XML" />
 			</Page>
+			<!--
 			<Page
 				id="idPagTesoreria"
 				title="Configuración de Datos"
@@ -31,8 +32,8 @@
 				showNavButton="{= !${device>/system/desktop} }"
 				navButtonPress=".onPressDetailBack">
 				<core:Fragment id="frg-Tesoreria" fragmentName="usilconfiguracionportalreserva.fragment.Tesoreria" type="XML" />
-			</Page>
-			<Page
+			</Page>-->
+			<!--<Page
 				id="idPagRecepcion"
 				title="Configuración de Datos"
 				backgroundDesign= "Solid"
@@ -47,7 +48,7 @@
 				showNavButton="{= !${device>/system/desktop} }"
 				navButtonPress=".onPressDetailBack">
 				<core:Fragment id="frg-Constantes" fragmentName="usilconfiguracionportalreserva.fragment.Constantes" type="XML" />
-			</Page>
+			</Page>-->
 			<Page
 				id="detailDetail"
 				title="Detail Detail"
@@ -95,6 +96,7 @@
 				title="Configuración y Mantenimiento"
 				backgroundDesign= "List">
 				<List>
+				<!--
 					<ObjectListItem
 						activeIcon=""
 						icon="sap-icon://bell"
@@ -102,23 +104,24 @@
 						title="Notificaciones"
 						press="onNotificaciones"
 						type="Navigation">
-					</ObjectListItem>
+					</ObjectListItem> -->
 					<ObjectListItem
 						activeIcon=""
-						icon="sap-icon://official-service"
+						icon="sap-icon://employee"
 						numberState="Information"
 						title="Datos Maestros"
 						press="onDatosMaestros"
 						type="Navigation">
 					</ObjectListItem>
-					<ObjectListItem
+				<!--	<ObjectListItem
 						activeIcon=""
 						icon="sap-icon://paid-leave"
 						numberState="Information"
 						title="Tesoreria"
 						press="onTesoreria"
 						type="Navigation">
-					</ObjectListItem>
+					</ObjectListItem> -->
+					<!--
 					<ObjectListItem
 						activeIcon=""
 						icon="sap-icon://attachment"
@@ -126,7 +129,7 @@
 						title="Recepción de Documentos"
 						press="onRecepcion"
 						type="Navigation">
-					</ObjectListItem>
+					</ObjectListItem> 
 					<ObjectListItem
 						activeIcon=""
 						icon="sap-icon://co"
@@ -134,7 +137,7 @@
 						title="Constantes"
 						press="onConstantes"
 						type="Navigation">
-					</ObjectListItem>
+					</ObjectListItem>-->
 				</List>
 			</Page>
 			<Page

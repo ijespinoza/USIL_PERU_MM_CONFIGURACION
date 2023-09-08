@@ -26,6 +26,7 @@
       "env": {
         "DEBUG": "--inspect",
         "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+        "FIORI_TOOLS_BACKEND_CONFIG": "[{\"destination\":\"northwind\",\"path\":\"/northwind\"},{\"destination\":\"HanaServicesReserva\",\"path\":\"/odata\"}]",
         "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/usil_configuracion_portal_reserva\"}"
       }
     },
@@ -54,6 +55,7 @@
       "port": 9229,
       "env": {
         "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+        "FIORI_TOOLS_BACKEND_CONFIG": "[{\"destination\":\"northwind\",\"path\":\"/northwind\"},{\"destination\":\"HanaServicesReserva\",\"path\":\"/odata\"}]",
         "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/usil_configuracion_portal_reserva\"}"
       }
     }

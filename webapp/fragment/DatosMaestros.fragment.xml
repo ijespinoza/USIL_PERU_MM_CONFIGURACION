@@ -12,20 +12,23 @@
 			<IconTabFilter 
 				id="headerMod"
 				key="header"
-				icon="sap-icon://building"
+				icon="sap-icon://employee"
 				iconColor="Positive"
-				text="Sociedad">
-				<Table id="idTbSociedades" 
-						items="{path: '/sociedades'}"
+				text="Responsable">
+				<SearchField  id="idSearchField" liveChange="onSearch" search="onSearch" width="100%" placeholder="Buscar..." />
+
+				<Table id="idTbResponsables" 
+						items="{path: '/Responsables'}"
 						mode="None"
 						inset="false">
 						<headerToolbar>
 							<OverflowToolbar id="otbSubheader02">
-								<Title 	 text="Lista de Asignación a Sociedad" level="H2"  />
+								<Title 	 text="Listado de Responsables" level="H2"  />
+								
 								<ToolbarSpacer />
 								<Button type="Accept"
-									text="Mostrar sociedades"
-									press="onAbrirSociedades"
+									text="Crear Responsable"
+									press="onCrearResponsables"
 									ariaDescribedBy="acceptButtonDescription genericButtonDescription">
 								<layoutData>
 									<FlexItemData growFactor="1" />
@@ -41,119 +44,43 @@
 								<Text text="Codigo" />
 							</Column>
 							<Column >
-								<Text text="Sociedad" />
+								<Text text="Nombre" />
 							</Column>
 							<Column >
-								<Text text="Moneda" />
+								<Text text="Apellido" />
 							</Column>
+							<Column >
+								<Text text="Correo" />
+							</Column>
+							<Column width="8rem" >
+								<Text text="Estado" />
+							</Column>
+							<Column hAlign="Center" width="8rem">
+								<Text text="Acciones" textAlign="End" />
+							</Column>											
 						
 						</columns>
 						<items id="items">
 							<ColumnListItem vAlign="Middle" >
-								<cells>
-									<ObjectIdentifier  title="{codigo}" />
-									<ObjectIdentifier  title="{descripcion}" />	
-									<ObjectIdentifier  title="{moneda}" />											
+								<cells>								    
+									<ObjectIdentifier   title="{ID}" />
+									<Input type="Text"  value="{nombre}" editable="{edit}" />	
+									<Input type="Text" value="{apellido}" editable="{edit}" />
+									<Input type="Text" value="{email}" editable="{edit}" />
+									<Switch state="{estado}" type="AcceptReject" enabled="{edit}" />                                    
+									<HBox>
+									<Button icon="sap-icon://edit" press="onEditarResponsable" tooltip="Editar" />
+									<ToolbarSpacer width="0.5rem" />
+									<Button icon="sap-icon://delete" press="onEliminarResponsable"  tooltip="Eliminar" />
+									<ToolbarSpacer width="0.5rem" />
+                                    <Button type="Emphasized" icon="sap-icon://save" press="onGuardarResponsable" tooltip="Guardar"/>	
+									</HBox>
+                            									
 								</cells>
 							</ColumnListItem>
 						</items>
-					</Table>
-			</IconTabFilter>
-			<IconTabSeparator icon=""/>
-			<IconTabFilter
-				icon="sap-icon://capital-projects"
-				iconColor="Positive"
-				text="Org. Compras">
-				<Table id="idTbOrganizacionCompras" 
-				items="{path: '/orgCompras'}"
-						growing="true" growingThreshold="10"
-						mode="None"
-						inset="false">
-						<headerToolbar>
-							<OverflowToolbar>
-								<Title 	 text="Lista de Asignación a Org. de Compra" level="H2"  />
-								<ToolbarSpacer />
-								<Button type="Accept"
-									text="Mostrar Organizaciones de compra"
-									press="onAbrirOrgCompras"
-									ariaDescribedBy="acceptButtonDescription genericButtonDescription">
-								<layoutData>
-									<FlexItemData growFactor="1" />
-								</layoutData>
-							</Button>
-								<!-- <OverflowToolbarButton text="Nueva" icon="sap-icon://add" press="onNuevaPos" />
-								<OverflowToolbarButton text="Editar" icon="sap-icon://edit" press="onEdit"/>
-								<OverflowToolbarButton text="Eliminar" icon="sap-icon://delete" press="onDelete"/> -->
-							</OverflowToolbar>
-						</headerToolbar>
-						<columns>
-							<Column >
-								<Text text="Código" />
-							</Column>
-							<Column >
-								<Text text="Org. de Compra" />
-							</Column>
-						
-						
-						</columns>
-						<items id="items">
-							<ColumnListItem vAlign="Middle" >
-								<cells>
-									<ObjectIdentifier  title="{codigo}" />
-									<ObjectIdentifier  title="{descripcion}" />	
-								</cells>
-							</ColumnListItem>							
-						</items>
-					</Table>
-			</IconTabFilter>
-			<IconTabSeparator icon=""/>
-			<IconTabFilter
-				icon="sap-icon://group"
-				iconColor="Positive"
-				text="Gpo.Compras">
-				<Table id="idTbGrupoCompras" 
-				items="{path: '/grupoCompras'}"
-						growing="true" growingThreshold="10"
-						mode="None"
-						inset="false">
-						<headerToolbar>
-							<OverflowToolbar id="xx">
-								<Title 	 text="Lista de Asignación a Grp. de Compras" level="H2"  />
-								<ToolbarSpacer />
-								<Button type="Accept"
-									text="Mostrar Grupo de compra"
-									press="onAbrirGrpCompras"
-									ariaDescribedBy="acceptButtonDescription genericButtonDescription">
-								<layoutData>
-									<FlexItemData growFactor="1" />
-								</layoutData>
-							</Button>
-								 
-								<!--<OverflowToolbarButton text="Nueva" icon="sap-icon://add" press="onNuevaPos" />
-								<OverflowToolbarButton text="Editar" icon="sap-icon://edit" press="onEdit"/>
-								<OverflowToolbarButton text="Eliminar" icon="sap-icon://delete" press="onDelete"/> -->
-							</OverflowToolbar>
-						</headerToolbar>
-						<columns>
-								<Column >
-								<Text text="Código" />
-							</Column>
-							<Column >
-								<Text text="Org. de Compra" />
-							</Column>
-						
-						
-						</columns>
-						<items id="items">
-							<ColumnListItem vAlign="Middle" >
-								<cells>
-									<ObjectIdentifier  title="{codigo}" />
-									<ObjectIdentifier  title="{descripcion}" />	
-								</cells>
-							</ColumnListItem>
-						</items>
-					</Table>
-			</IconTabFilter>
+					</Table>					
+			</IconTabFilter>		
 			</items>
 		</IconTabBar>
 

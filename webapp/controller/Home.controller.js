@@ -13,15 +13,22 @@ sap.ui.define([
         "use strict";
         let that;
         let oView;
-        let ODATA_PROVEEDORES;
+        let ODATA_CONFIGURACIONES;
         let filaUpdateNotificacion,filaUpdateTesoreria;
         let oFilasSociedades=[], oFilaOrgCompras =[],  oFilaGrpCompras =[];
-        let MODEL;
+        let MODEL;       
 
         return Controller.extend("usilconfiguracionportalreserva.controller.Home", {
             onInit: function () {
                 that = this;
-                oView = that.getView();		
+                oView = that.getView();                
+                ODATA_CONFIGURACIONES = this.getOwnerComponent().getModel("ODATA_CONFIGURACIONES");
+                that.onObtenerResponsables();                
+                let aResponsables = [];
+                let oModel = new sap.ui.model.json.JSONModel({
+                    Responsables: aResponsables
+                  });
+                that.getView().byId("frg-DatosMaestros--idTbResponsables").setModel(oModel);	
                 /*	
 			    ODATA_PROVEEDORES = this.getOwnerComponent().getModel("ODATA_PROVEEDORES");
                 MODEL = this.getOwnerComponent().getModel()
@@ -49,6 +56,7 @@ sap.ui.define([
                 this._dialog = {}*/
                 
             },
+            /*
             onListaSociedades:function(){
                 var aListaSociedades =
                 [
@@ -155,23 +163,7 @@ sap.ui.define([
                         sap.ui.core.BusyIndicator.hide();
                     }
                 });
-            },
-            onCrearEntitiy:function(path,data){
-                return new Promise((resolve,reject) => {
-                    ODATA_PROVEEDORES.create(path,data,{
-                        success: resolve,
-                        error: reject
-                    });
-                });
-            },
-            onUpdateEntitiy:function(path,data){
-                return new Promise((resolve,reject) => {
-                    ODATA_PROVEEDORES.update(path,data,{
-                        success: resolve,
-                        error: reject
-                    });
-                });
-            },
+            },         
             onListaSeteoModelo:function(){
                 var oModelEmpty = new JSONModel();
                 this.getOwnerComponent().setModel(oModelEmpty,"Notificaciones");
@@ -860,10 +852,7 @@ sap.ui.define([
                 this.getOwnerComponent().setModel(new JSONModel(datosNoti),"datosNotificaciones");
             },
 
-            /**
-             * Metodo para actualizar el contador de items para tabla de Constantes
-             * @param {psa.ui.base.Event} evento 
-             */
+            
             onUpdateFinishedConstantes: function(evento){
                 const length = evento.getParameter("total");
                 let titletable = this._getResourceBundle().getText("titleTableConstantes");
@@ -873,9 +862,7 @@ sap.ui.define([
                 MODEL.setProperty("/titleTableConstantes", titletable);
             },
 
-            /**
-             * Metodo que muestra el dialogo para INgresar una constante
-             */
+          
             onMostrarDialogoAgregarConstante : async function () {
                 MODEL.setProperty("/constante",{});
                 MODEL.setProperty("/valueStateNombre","None");
@@ -896,9 +883,7 @@ sap.ui.define([
             },
 
 
-            /**
-             * Metodo para Agregar y guardar una constante
-             */
+         
             onAgregarConstante : function () {
                 const constante = MODEL.getProperty("/constante");
                 if(!constante.nombre){
@@ -926,20 +911,13 @@ sap.ui.define([
                 this._guardarConstante(constante);
             },
 
-            /**
-             * Metodo para actualizar una constante
-             * @param {sap.ui.base.Event} evento 
-             */
+         
             onEditarConstante: async function (evento) {
                 this.onMostrarDialogoAgregarConstante();
                 const constante = evento.getSource().getBindingContext().getObject();
                 MODEL.setProperty("/constante",constante);
             },
 
-            /**
-             * Metodo para validar el campo nombre de constante
-             * @param {sap.ui.base.Event} evento 
-             */
             onValidarNombreConstante: function (evento) {
                 const nombre = evento.getParameter("value");
                 const input = evento.getSource();
@@ -951,10 +929,7 @@ sap.ui.define([
                 input.setValueState("Success");
                 input.setValueStateText("Nombre correcto");
             },
-            /**
-             * Metodo para validar el campo valor de constante
-             * @param {sap.ui.base.Event} evento 
-             */
+           
             onValidarValorConstante: function (evento) {
                 const nombre = evento.getParameter("value");
                 const input = evento.getSource();
@@ -967,10 +942,7 @@ sap.ui.define([
                 input.setValueStateText("Valor correcto");
             },
 
-            /**
-             * Metodo para validar el campo descripcion de constante
-             * @param {sap.ui.base.Event} evento 
-             */
+         
             onValidarDescripcionConstante: function (evento) {
                 const nombre = evento.getParameter("value");
                 const input = evento.getSource();
@@ -983,11 +955,7 @@ sap.ui.define([
                 input.setValueStateText("Descripción correcta");
             },
 
-             /**
-             * Getter para resource bundle.
-             * @public
-             * @returns {sap.ui.model.resource.ResourceModel} the resourceModel of the component
-             */
+           
             _getResourceBundle : function () {
                 return this.getOwnerComponent().getModel("i18n").getResourceBundle();
             },
@@ -1012,6 +980,320 @@ sap.ui.define([
                 if(request){
                     MessageBox.success(`La constante ${constante.nombre} se actualizó con éxito`);
                 }
+            },      
+            */   
+            onvalidarCampos: async function(fila){
+            let valid = true;
+            let aMensajes = [];
+            let regexCorreo = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+            if(fila.nombre == ""){                
+              aMensajes.push("Por favor ingrese un nombre");
+              
             }
+            if(fila.apellido == ""){                
+             aMensajes.push("Por favor ingrese los apellidos");                
+            }
+            if(fila.email == ""){
+                debugger
+                aMensajes.push("Por favor ingrese un correo");              
+              
+            }else if(fila.email){
+              let test =  regexCorreo.test(fila.email);
+              if(!test){
+                aMensajes.push("Por favor ingrese un correo valido"); 
+              }
+            }
+            // Crea un arreglo de MessageStrips basado en el array aMensajes
+            const aMessageStrips = aMensajes.map(function (sMensaje, iIndex) {
+                return new sap.m.MessageStrip({                    
+                    text: sMensaje,
+                    type: sap.ui.core.MessageType.Error ,// Define el tipo de mensaje, como Error
+                    icon: "sap-icon://status-error",
+                    showIcon: true,
+                });
+            });
+
+             // Crea un diálogo personalizado para mostrar los MessageStrips
+             const oDialog = new sap.m.Dialog({
+                 title: "Validación de campos",
+                 icon: "sap-icon://status-error",
+                 content: aMessageStrips, // Agrega los MessageStrips al contenido del diálogo
+                 beginButton: new sap.m.Button({
+                     text: "Cerrar",
+                     press: function () {
+                         oDialog.close();
+                     }
+                 }),
+                 afterClose: function () {
+                     oDialog.destroy(); // Limpia el diálogo después de cerrarlo
+                 }
+             });
+             if(aMensajes.length>0){
+                valid = false;
+                oDialog.open();                
+             }
+
+             return valid;
+                         
+            },
+            onGuardarResponsable: async function(oEvent){   
+                let oItem = oEvent.getSource().getBindingContext().getObject();
+                let obj = {
+                    "ID":oItem.ID,
+                    "nombre": oItem.nombre,
+                    "apellido": oItem.apellido,
+                    "estado": oItem.estado,
+                    "delete": false,
+                    "email":oItem.email
+                }; 
+                
+                let valid = await that.onvalidarCampos(oItem)
+                if(!valid){
+                   return;
+                }
+                if(oItem.ID != undefined){
+                    let usuarioExistenteEdit = await that.onValidarUsuarioExistenteEdit(oItem);
+                    if(!usuarioExistenteEdit){
+                        that.onAbrirDialogMensajes(["El correo ya se encuentra en uso por otro usuario."],"El correo ya se encuentra registrado");
+                        return;
+                        }
+                }
+                else{
+                    let usuarioExistente = await that.onValidarUsuarioExistente(oItem);                
+                    if(!usuarioExistente){
+                    that.onAbrirDialogMensajes(["El correo ya se encuentra en uso por otro usuario."],"El correo ya se encuentra registrado");
+                    return;
+                    }
+                }                
+
+                
+
+                sap.ui.core.BusyIndicator.show();  
+                await that.onEsperarSegundos(1000);
+
+                if(oItem.ID == undefined){
+                    obj.ID = 0;
+                    const solicitud = await that.onCrearEntitiy("/MaestroResponsable",obj); 
+                    MessageBox.success("Usuario responsable creado con éxito.");
+                }
+                else{
+                    const solicitud = await that.onUpdateEntitiy("/MaestroResponsable/" + oItem.ID ,obj);
+                    MessageBox.success("Usuario responsable actualizado con éxito.");
+                }                 
+                that.onObtenerResponsables();
+                sap.ui.core.BusyIndicator.hide();  
+
+            },   
+            onCrearResponsables: async  function() {              
+                var oTable = that.getView().byId("frg-DatosMaestros--idTbResponsables"); 
+                var oModel = oTable.getModel();  
+                var aResponsables = oModel.getProperty("/Responsables");  
+                aResponsables.push({
+                  codigo: "",
+                  nombre: "",
+                  apellido: "",
+                  edit: true,
+                  estado: true, // Por defecto, establecemos el estado como "Activo"
+                  email:""
+                });
+
+                let obj = {
+                    "ID":0,
+                    "nombre": "",
+                    "apellido": "",
+                    "estado": true,
+                    "delete": false,
+                    "email": ""
+                };    
+                oModel.setProperty("/Responsables", aResponsables);  
+                oTable.setModel(oModel);
+              },
+              onValidarUsuarioActivo: async function(fila){
+               let valid;
+                (fila.estado)?valid = false:valid=true
+                return valid;
+              },
+              onValidarUsuarioExistenteEdit: function(fila){
+                let valid = false;
+                var oTable = this.getView().byId("frg-DatosMaestros--idTbResponsables");
+                var aItems = oTable.getModel().getData().Responsables;
+                var bCorreoExistente = false;
+                for (var i = 0; i < aItems.length; i++) {
+                    var sCorreoExistente = aItems[i].email; 
+                    if (aItems[i].ID != fila.ID) { // Evita comparar con el elemento actual
+                        
+                        if (sCorreoExistente == fila.email) {
+                            bCorreoExistente = true;
+                            break;
+                        }
+                    }
+                }
+                if (!bCorreoExistente) {
+                    valid = true;
+                }
+                return valid;
+              },
+              onValidarUsuarioExistente: function(fila){
+                let valid = true;
+                var oTable = this.getView().byId("frg-DatosMaestros--idTbResponsables");
+                var aItems = oTable.getModel().getData().Responsables;
+                var bCorreoExistente = false;
+                for (var i = 0; i < aItems.length; i++) {
+                    var sCorreoExistente = aItems[i].email; 
+                    if (aItems[i].ID != undefined) { // Evita comparar con el elemento actual
+                        
+                        if (sCorreoExistente == fila.email) {
+                            bCorreoExistente = true;
+                            break;
+                        }
+                    }
+                }
+                if (bCorreoExistente) {
+                    valid = false;
+                }
+                return valid;
+              },
+              onAbrirDialogMensajes: function(aMensajes,tituloDialog){
+                const aMessageStrips = aMensajes.map(function (sMensaje, iIndex) {
+                    return new sap.m.MessageStrip({                    
+                        text: sMensaje,
+                        type: sap.ui.core.MessageType.Error ,// Define el tipo de mensaje, como Error
+                        icon: "sap-icon://status-error",
+                        showIcon: true,
+                    });
+                });
+    
+                 // Crea un diálogo personalizado para mostrar los MessageStrips
+                 const oDialog = new sap.m.Dialog({
+                     title: tituloDialog,
+                     icon: "sap-icon://status-error",
+                     content: aMessageStrips, // Agrega los MessageStrips al contenido del diálogo
+                     beginButton: new sap.m.Button({
+                         text: "Cerrar",
+                         press: function () {
+                             oDialog.close();
+                         }
+                     }),
+                     afterClose: function () {
+                         oDialog.destroy(); // Limpia el diálogo después de cerrarlo
+                     }
+                 });
+                 oDialog.open();
+              },
+              onEliminarResponsable: async function (oEvent) {
+                var oTable = this.getView().byId("frg-DatosMaestros--idTbResponsables"); 
+                let oItem = oEvent.getSource().getBindingContext().getObject();
+                if(oItem.ID==undefined){                  
+                  var aResponsables = oTable.getModel().getProperty("/Responsables");
+                  var nIndex = aResponsables.indexOf(oItem);
+                  if (nIndex !== -1) {
+                    aResponsables.splice(nIndex, 1);
+                    oTable.getModel().setProperty("/Responsables", aResponsables);
+                  }
+                  return;
+                }
+                let valid = await that.onValidarUsuarioActivo(oItem);
+                if(!valid){
+                  that.onAbrirDialogMensajes(["No puede eliminar un usuario activo"],"Eliminar usuario");
+                  return;
+                }
+                sap.ui.core.BusyIndicator.show();  
+                await that.onEsperarSegundos(1000);
+                               
+                let obj = {
+                    "ID":0,
+                    "nombre": "",
+                    "apellido": "",
+                    "estado": false,
+                    "delete": true,
+                    "email":""
+                }; 
+                const solicitud = await that.onUpdateEntitiy("/MaestroResponsable/" + oItem.ID ,obj);
+                that.onObtenerResponsables();  
+                MessageBox.success("Usuario eliminado con éxito");  
+                sap.ui.core.BusyIndicator.hide();            
+              },
+              onEditarResponsable: function(oEvent){               
+                
+                 let sPath = oEvent.getSource().getBindingContext().sPath.split("/")[2];
+                 let oTable = this.getView().byId("frg-DatosMaestros--idTbResponsables");
+                 let data = this.getView().byId("frg-DatosMaestros--idTbResponsables").getModel().getData().Responsables;
+                 let fila = data[sPath];                 
+                 fila.edit = !fila.edit;   
+                 let oModel = new sap.ui.model.json.JSONModel({
+                    Responsables: data
+                 });              
+                 oTable.setModel(oModel);
+              },
+
+              onCrearEntitiy:function(path,data){
+                return new Promise((resolve,reject) => {
+                    ODATA_CONFIGURACIONES.create(path,data,{
+                        success: resolve,
+                        error: reject
+                    });
+                });
+            },
+            onUpdateEntitiy:function(path,data){
+                return new Promise((resolve,reject) => {
+                    ODATA_CONFIGURACIONES.update(path,data,{
+                        success: resolve,
+                        error: reject
+                    });
+                });
+            },
+           
+            onObtenerResponsables: function(){                
+                ODATA_CONFIGURACIONES.read('/MaestroResponsable', {		
+                    //filters: filters,		
+                    urlParameters: {
+                        "$expand":""
+                    },
+                    success: function (result) {                  
+                      var oTable = that.getView().byId("frg-DatosMaestros--idTbResponsables"); 
+                      $.each(result.results,function(i,item){
+                        item.edit = false; 
+                        item.ID = item.ID.toString(); 
+                      });
+                      let oModel = new sap.ui.model.json.JSONModel({
+                      Responsables: result.results
+                      });
+                      oTable.setModel(oModel);                        
+                    },
+                    error: function (err) {                        
+                        var error = err;
+                        MessageBox.error("Error al listar datos de la entidad:" + entidad);
+                        sap.ui.core.BusyIndicator.hide();
+                    }
+                });
+            },
+            onSearch: function (oEvent) {
+                // Obtén el valor de búsqueda del campo de entrada                
+                var sSearchValue = oEvent.mParameters.newValue;            
+                // Obtiene la referencia a la tabla y al modelo de datos
+                var oTable = this.getView().byId("frg-DatosMaestros--idTbResponsables");
+                var oModel = oTable.getModel();            
+                // Aplica el filtro a los datos del modelo
+                var aFilters = [];
+                if (sSearchValue) {
+                    sSearchValue = sSearchValue.toString();
+                    aFilters.push(new sap.ui.model.Filter([
+                        new sap.ui.model.Filter("nombre", sap.ui.model.FilterOperator.Contains, sSearchValue.toString()),
+                        new sap.ui.model.Filter("apellido", sap.ui.model.FilterOperator.Contains, sSearchValue.toString()),
+                        new sap.ui.model.Filter("ID", sap.ui.model.FilterOperator.Contains, sSearchValue.toString()),
+                        new sap.ui.model.Filter("email", sap.ui.model.FilterOperator.Contains, sSearchValue.toString())
+                    ], false));
+                }
+            
+                oTable.getBinding("items").filter(aFilters);
+            },
+            onEsperarSegundos(milisegundos) {
+                return new Promise((resolve) => {
+                  setTimeout(() => {
+                    resolve();
+                  }, milisegundos); 
+                });
+              },                 
+              
         });
     });
