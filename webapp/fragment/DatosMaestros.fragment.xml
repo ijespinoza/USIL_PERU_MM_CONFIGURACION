@@ -17,6 +17,7 @@
 				text="Responsable">
 				<SearchField  id="idSearchField" liveChange="onSearch" search="onSearch" width="100%" placeholder="Buscar..." />
 
+
 				<Table id="idTbResponsables" 
 						items="{path: '/Responsables'}"
 						mode="None"
@@ -40,22 +41,22 @@
 							</OverflowToolbar>
 						</headerToolbar>
 						<columns>
-							<Column >
+							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="Codigo" />
 							</Column>
-							<Column >
+							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="Nombre" />
 							</Column>
-							<Column >
+							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="Apellido" />
 							</Column>
-							<Column >
+							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="Correo" />
 							</Column>
-							<Column width="8rem" >
+							<Column width="8rem" minScreenWidth="Desktop" demandPopin="true">
 								<Text text="Estado" />
 							</Column>
-							<Column hAlign="Center" width="8rem">
+							<Column hAlign="Center" width="8rem" minScreenWidth="Desktop" demandPopin="true">
 								<Text text="Acciones" textAlign="End" />
 							</Column>											
 						
@@ -79,7 +80,8 @@
 								</cells>
 							</ColumnListItem>
 						</items>
-					</Table>					
+					</Table>	
+							
 			</IconTabFilter>		
 			</items>
 		</IconTabBar>
