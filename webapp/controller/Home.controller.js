@@ -994,7 +994,7 @@ sap.ui.define([
              aMensajes.push("Por favor ingrese los apellidos");                
             }
             if(fila.email == ""){
-                debugger
+                
                 aMensajes.push("Por favor ingrese un correo");              
               
             }else if(fila.email){
@@ -1036,7 +1036,8 @@ sap.ui.define([
              return valid;
                          
             },
-            onGuardarResponsable: async function(oEvent){   
+            onGuardarResponsable: async function(oEvent){ 
+                let mensaje= "";  
                 let oItem = oEvent.getSource().getBindingContext().getObject();
                 let obj = {
                     "ID":oItem.ID,
@@ -1052,6 +1053,7 @@ sap.ui.define([
                    return;
                 }
                 if(oItem.ID != undefined){
+                    mensaje = "¿Estás seguro de actualizar el usuario?";
                     let usuarioExistenteEdit = await that.onValidarUsuarioExistenteEdit(oItem);
                     if(!usuarioExistenteEdit){
                         that.onAbrirDialogMensajes(["El correo ya se encuentra en uso por otro usuario."],"El correo ya se encuentra registrado");
@@ -1059,6 +1061,7 @@ sap.ui.define([
                         }
                 }
                 else{
+                    mensaje = "¿Estás seguro de crear el usuario?";
                     let usuarioExistente = await that.onValidarUsuarioExistente(oItem);                
                     if(!usuarioExistente){
                     that.onAbrirDialogMensajes(["El correo ya se encuentra en uso por otro usuario."],"El correo ya se encuentra registrado");
@@ -1066,7 +1069,7 @@ sap.ui.define([
                     }
                 }            
                 
-                sap.m.MessageBox.confirm("¿Estás seguro de crear el usuario?", {
+                sap.m.MessageBox.confirm(mensaje, {
                     title: "Confirmación",
                     onClose: async function (oAction) {
                         if (oAction === sap.m.MessageBox.Action.OK) {
