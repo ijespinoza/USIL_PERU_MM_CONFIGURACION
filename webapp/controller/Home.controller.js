@@ -1064,24 +1064,31 @@ sap.ui.define([
                     that.onAbrirDialogMensajes(["El correo ya se encuentra en uso por otro usuario."],"El correo ya se encuentra registrado");
                     return;
                     }
-                }                
-
+                }            
                 
+                sap.m.MessageBox.confirm("¿Estás seguro de crear el usuario?", {
+                    title: "Confirmación",
+                    onClose: async function (oAction) {
+                        if (oAction === sap.m.MessageBox.Action.OK) {
+                            sap.ui.core.BusyIndicator.show();  
+                            await that.onEsperarSegundos(1000);
+            
+                            if(oItem.ID == undefined){
+                                obj.ID = 0;
+                                const solicitud = await that.onCrearEntitiy("/MaestroResponsable",obj); 
+                                MessageBox.success("Usuario responsable creado con éxito.");
+                            }
+                            else{
+                                const solicitud = await that.onUpdateEntitiy("/MaestroResponsable/" + oItem.ID ,obj);
+                                MessageBox.success("Usuario responsable actualizado con éxito.");
+                            }                 
+                            that.onObtenerResponsables();
+                            sap.ui.core.BusyIndicator.hide();  
+                        }                          
+                    }
+                });               
 
-                sap.ui.core.BusyIndicator.show();  
-                await that.onEsperarSegundos(1000);
-
-                if(oItem.ID == undefined){
-                    obj.ID = 0;
-                    const solicitud = await that.onCrearEntitiy("/MaestroResponsable",obj); 
-                    MessageBox.success("Usuario responsable creado con éxito.");
-                }
-                else{
-                    const solicitud = await that.onUpdateEntitiy("/MaestroResponsable/" + oItem.ID ,obj);
-                    MessageBox.success("Usuario responsable actualizado con éxito.");
-                }                 
-                that.onObtenerResponsables();
-                sap.ui.core.BusyIndicator.hide();  
+               
 
             },   
             onCrearResponsables: async  function() {              
@@ -1194,24 +1201,32 @@ sap.ui.define([
                 }
                 let valid = await that.onValidarUsuarioActivo(oItem);
                 if(!valid){
-                  that.onAbrirDialogMensajes(["No puede eliminar un usuario activo"],"Eliminar usuario");
-                  return;
+                that.onAbrirDialogMensajes(["No puede eliminar un usuario activo"],"Eliminar usuario");
+                return;
                 }
-                sap.ui.core.BusyIndicator.show();  
-                await that.onEsperarSegundos(1000);
-                               
-                let obj = {
-                    "ID":0,
-                    "nombre": "",
-                    "apellido": "",
-                    "estado": false,
-                    "delete": true,
-                    "email":""
-                }; 
-                const solicitud = await that.onUpdateEntitiy("/MaestroResponsable/" + oItem.ID ,obj);
-                that.onObtenerResponsables();  
-                MessageBox.success("Usuario eliminado con éxito");  
-                sap.ui.core.BusyIndicator.hide();            
+                sap.m.MessageBox.confirm("¿Estás seguro de eliminar el usuario?", {
+                    title: "Confirmación",
+                    onClose: async function (oAction) {
+                        if (oAction === sap.m.MessageBox.Action.OK) {
+                            
+                            sap.ui.core.BusyIndicator.show();  
+                            await that.onEsperarSegundos(1000);
+                                           
+                            let obj = {
+                                "ID":0,
+                                "nombre": "",
+                                "apellido": "",
+                                "estado": false,
+                                "delete": true,
+                                "email":""
+                            }; 
+                            const solicitud = await that.onUpdateEntitiy("/MaestroResponsable/" + oItem.ID ,obj);
+                            that.onObtenerResponsables();  
+                            MessageBox.success("Usuario eliminado con éxito");  
+                            sap.ui.core.BusyIndicator.hide(); 
+                        } 
+                    }
+                });                         
               },
               onEditarResponsable: function(oEvent){               
                 
