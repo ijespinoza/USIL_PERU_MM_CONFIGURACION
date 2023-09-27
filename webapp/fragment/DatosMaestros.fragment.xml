@@ -17,7 +17,7 @@
 				text="Responsable">
 				<SearchField  id="idSearchField" liveChange="onSearch" search="onSearch" width="100%" placeholder="Buscar..." />
 
-
+	
 				<Table id="idTbResponsables" 
 						items="{path: '/Responsables'}"
 						mode="None"
