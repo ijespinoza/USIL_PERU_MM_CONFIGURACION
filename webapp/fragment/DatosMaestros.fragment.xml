@@ -53,10 +53,13 @@
 							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="Correo" />
 							</Column>
-							<Column width="8rem" minScreenWidth="Desktop" demandPopin="true">
+							<Column width="13rem" minScreenWidth="Desktop" demandPopin="true">
+								<Text text="Centro" />
+							</Column>
+							<Column minScreenWidth="Desktop" demandPopin="true">
 								<Text text="Estado" />
 							</Column>
-							<Column hAlign="Center" width="8rem" minScreenWidth="Desktop" demandPopin="true">
+							<Column hAlign="Center" minScreenWidth="Desktop" demandPopin="true">
 								<Text text="Acciones" textAlign="End" />
 							</Column>											
 						
@@ -68,6 +71,17 @@
 									<Input type="Text"  value="{nombre}" editable="{edit}" />	
 									<Input type="Text" value="{apellido}" editable="{edit}" />
 									<Input type="Text" value="{email}" editable="{edit}" />
+									<Select
+										forceSelection="false"
+										editable="{edit}"
+										selectedKey="{centro}"
+										items="{
+											path: 'Centros>/'
+										}">
+										<core:Item key="{Centros>ID}" text="{Centros>descripcion}" />
+									</Select>
+
+
 									<Switch state="{estado}" type="AcceptReject" enabled="{edit}" />                                    
 									<HBox>
 									<Button icon="sap-icon://edit" press="onEditarResponsable" tooltip="Editar" />

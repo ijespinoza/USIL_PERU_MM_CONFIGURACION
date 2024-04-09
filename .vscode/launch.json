@@ -2,61 +2,29 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Start usil_configuracion_portal_reserva",
-      "type": "node",
-      "request": "launch",
-      "runtimeExecutable": "npx",
+      "name": "USIL_PERU_MM_RESERVAS",
       "cwd": "${workspaceFolder}",
-      "windows": {
-        "runtimeExecutable": "npx.cmd"
-      },
       "runtimeArgs": [
         "fiori",
         "run"
       ],
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npx",
       "args": [
         "--open",
         "index.html"
-        //"test/flpSandbox.html#usilconfiguracionportalreserva-display"
       ],
-      "console": "internalConsole",
-      "internalConsoleOptions": "openOnSessionStart",
-      "outputCapture": "std",
-      "port": 9229,
-      "env": {
-        "DEBUG": "--inspect",
-        "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
-        "FIORI_TOOLS_BACKEND_CONFIG": "[{\"destination\":\"northwind\",\"path\":\"/northwind\"},{\"destination\":\"HanaServicesReserva\",\"path\":\"/odata\"}]",
-        "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/usil_configuracion_portal_reserva\"}"
-      }
-    },
-    {
-      "name": "Start usil_configuracion_portal_reserva Local",
-      "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "npx",
       "windows": {
         "runtimeExecutable": "npx.cmd"
       },
-      "runtimeArgs": [
-        "fiori",
-        "run"
-      ],
-      "args": [
-        "--config",
-        "./ui5-local.yaml",
-        "--open",
-        "index.html" //test/flpSandbox.html#usilconfiguracionportalreserva-display"
-      ],
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart",
       "outputCapture": "std",
-      "port": 9229,
       "env": {
-        "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false",
+        "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/USIL_PERU_MM_CONFIGURACION\"}",
         "FIORI_TOOLS_BACKEND_CONFIG": "[{\"destination\":\"northwind\",\"path\":\"/northwind\"},{\"destination\":\"HanaServicesReserva\",\"path\":\"/odata\"}]",
-        "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/usil_configuracion_portal_reserva\"}"
+        "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
       }
     }
   ]

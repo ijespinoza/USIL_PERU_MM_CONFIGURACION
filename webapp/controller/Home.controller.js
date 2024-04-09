@@ -23,6 +23,7 @@ sap.ui.define([
                 that = this;
                 oView = that.getView();                
                 ODATA_CONFIGURACIONES = this.getOwnerComponent().getModel("ODATA_CONFIGURACIONES");
+                that.onObtenerCentros();
                 that.onObtenerResponsables();                
                 let aResponsables = [];
                 let oModel = new sap.ui.model.json.JSONModel({
@@ -1045,7 +1046,8 @@ sap.ui.define([
                     "apellido": oItem.apellido,
                     "estado": oItem.estado,
                     "delete": false,
-                    "email":oItem.email
+                    "email":oItem.email,
+                    "centro":oItem.centro
                 }; 
                 
                 let valid = await that.onvalidarCampos(oItem)
@@ -1104,7 +1106,8 @@ sap.ui.define([
                   apellido: "",
                   edit: true,
                   estado: true, // Por defecto, establecemos el estado como "Activo"
-                  email:""
+                  email:"",
+                  centro:""
                 });
 
                 let obj = {
@@ -1113,7 +1116,8 @@ sap.ui.define([
                     "apellido": "",
                     "estado": true,
                     "delete": false,
-                    "email": ""
+                    "email": "",
+                    "centro": ""
                 };    
                 oModel.setProperty("/Responsables", aResponsables);  
                 oTable.setModel(oModel);
@@ -1221,7 +1225,8 @@ sap.ui.define([
                                 "apellido": "",
                                 "estado": false,
                                 "delete": true,
-                                "email":""
+                                "email":"",
+                                "centro":""
                             }; 
                             const solicitud = await that.onUpdateEntitiy("/MaestroResponsable/" + oItem.ID ,obj);
                             that.onObtenerResponsables();  
@@ -1299,7 +1304,8 @@ sap.ui.define([
                         new sap.ui.model.Filter("nombre", sap.ui.model.FilterOperator.Contains, sSearchValue.toString()),
                         new sap.ui.model.Filter("apellido", sap.ui.model.FilterOperator.Contains, sSearchValue.toString()),
                         new sap.ui.model.Filter("ID", sap.ui.model.FilterOperator.Contains, sSearchValue.toString()),
-                        new sap.ui.model.Filter("email", sap.ui.model.FilterOperator.Contains, sSearchValue.toString())
+                        new sap.ui.model.Filter("email", sap.ui.model.FilterOperator.Contains, sSearchValue.toString()),
+                        new sap.ui.model.Filter("centro", sap.ui.model.FilterOperator.Contains, sSearchValue.toString())
                     ], false));
                 }
             
@@ -1312,6 +1318,21 @@ sap.ui.define([
                   }, milisegundos); 
                 });
               },                 
-              
+        
+            onObtenerCentros: function () {
+                return new Promise((resolve) => {
+                    ODATA_CONFIGURACIONES.read('/Centros', {
+                        success: function (result) {
+                            that.getView().setModel(new JSONModel(result.results), "Centros")
+                        },
+                        error: function (err) {                        
+                            var error = err;
+                            MessageBox.error("Error al listar datos de la entidad:" + entidad);
+                            sap.ui.core.BusyIndicator.hide();
+                        }
+                    });
+                    resolve();
+                });
+            }
         });
     });
